@@ -80,6 +80,7 @@ export default function QuizGate() {
         className="quiz-video-bg"
         src="/fundo-inicial.mp4"
       />
+      <div className="video-scrim" aria-hidden />
       {/* Flores decorativas espalhadas */}
       {['🌸','🌺','🌼','🌸','🌷','🌻','🌸','🌺','🌼','🌷','🌸','🌻'].map((f, i) => (
         <span key={i} className={`quiz-flower quiz-flower--${i + 1}`}>{f}</span>
@@ -155,32 +156,73 @@ export default function QuizGate() {
         {step === 'prize' && (
           <motion.div
             key="prize"
-            className="quiz-card"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: 'backOut' }}
+            className="quiz-prize-screen"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
           >
-            <div className="quiz-error-icon" style={{filter: 'none'}}>🎮</div>
-            <h2 className="quiz-title" style={{ fontSize: '2.5rem', marginBottom: '16px' }}>Você ganhou!</h2>
-            <p className="quiz-subtitle" style={{ fontSize: '1.2rem', marginBottom: '24px' }}>
-              Mesmo que você tenha errado alguma, eu vou fingir que você acertou só pra te dar o presente 😂💚
-            </p>
-            <p className="quiz-hint" style={{ fontSize: '1.4rem' }}>
-              Seu prêmio é o <strong>Minecraft</strong>!
-            </p>
-            
-            <p className="quiz-subtitle" style={{ marginTop: '30px', fontWeight: 'bold' }}>
-              Bem-vinda ao Kairós.
-            </p>
-            <motion.button
-              className="quiz-btn-primary"
-              onClick={handleEnter}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Entrar
-            </motion.button>
+            {/* Fundo com a imagem do presente */}
+            <div className="quiz-prize-bg" />
+
+            {/* Overlay escuro gradiente */}
+            <div className="quiz-prize-overlay" />
+
+            {/* Partículas de celebração */}
+            {['🎮','⛏️','🌿','💎','🧱','⭐','🎮','💚','🎮','⛏️'].map((e, i) => (
+              <span key={i} className={`quiz-prize-particle quiz-prize-particle--${i + 1}`}>{e}</span>
+            ))}
+
+            {/* Conteúdo central */}
+            <div className="quiz-prize-content">
+              <motion.div
+                initial={{ scale: 0, rotate: -10 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ delay: 0.3, duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
+                className="quiz-prize-badge"
+              >
+                🎮
+              </motion.div>
+
+              <motion.p
+                className="quiz-prize-eyebrow"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+              >
+                parabéns, você provou que me conhece
+              </motion.p>
+
+              <motion.h1
+                className="quiz-prize-title"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.65, duration: 0.6 }}
+              >
+                Você ganhou<br />
+                <span className="quiz-prize-highlight">Minecraft</span>!
+              </motion.h1>
+
+              <motion.p
+                className="quiz-prize-sub"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.85, duration: 0.5 }}
+              >
+                Mesmo que você tenha errado alguma, eu vou fingir que acertou tudo<br />só pra te dar esse presente 😂💚
+              </motion.p>
+
+              <motion.button
+                className="quiz-prize-btn"
+                onClick={handleEnter}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.1, duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
+                whileHover={{ scale: 1.06 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Entrar no Kairós →
+              </motion.button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

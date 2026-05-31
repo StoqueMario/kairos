@@ -17,6 +17,7 @@ export default function Home() {
         className="home-video-bg"
         src="/bg-video.mp4"
       />
+      <div className="video-scrim" aria-hidden />
       <HeroSection />
       <CounterSection />
       <QuoteSection />

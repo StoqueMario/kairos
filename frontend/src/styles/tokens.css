@@ -58,9 +58,9 @@
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Glass */
-  --blur-glass: 24px;
-  --blur-strong: 40px;
+  /* Glass — valores menores para performance com vídeo atrás */
+  --blur-glass: 12px;
+  --blur-strong: 20px;
 }
 
 /* ── Tema CLARO (default) ────────────────────────────────────────────────── */
