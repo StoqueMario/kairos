@@ -1,0 +1,228 @@
+/* ── Page wrapper & header (v2 — gigante, glass) ─────────────────────────── */
+.page-wrapper {
+  min-height: 100dvh;
+  padding-top: 120px;
+  padding-bottom: 120px;
+  position: relative;
+}
+
+.page-header {
+  position: relative;
+  padding: 0 clamp(20px, 6vw, 96px) 56px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border-soft);
+  margin-bottom: 48px;
+}
+
+.page-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 900px;
+}
+
+.page-header-emoji {
+  font-size: clamp(2.6rem, 5vw, 4rem);
+  line-height: 1;
+  filter: drop-shadow(0 4px 24px var(--accent-aura));
+  opacity: 0.95;
+  margin-bottom: 8px;
+  display: inline-block;
+  animation: emoji-bounce 6s var(--ease-smooth) infinite;
+}
+
+@keyframes emoji-bounce {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50%      { transform: translateY(-10px) rotate(3deg); }
+}
+
+.page-header-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 9vw, 7.5rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  background: linear-gradient(180deg,
+    var(--text-primary) 30%,
+    var(--accent-primary) 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.page-header-subtitle {
+  font-family: var(--font-hand);
+  font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 56ch;
+  line-height: 1.4;
+}
+
+.page-header .btn-primary { align-self: center; }
+
+/* ── Botões compartilhados ───────────────────────────────────────────────── */
+/* .btn-primary fica definido em glass.css; aqui apenas o ghost */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  border: 1.5px solid var(--border-medium);
+  border-radius: var(--radius-pill);
+  transition: all 0.25s var(--ease-smooth);
+  font-family: var(--font-body);
+}
+.btn-ghost:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  background: var(--bg-glass);
+}
+
+/* ── Empty state ─────────────────────────────────────────────────────────── */
+.empty-state {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 100px 24px;
+  color: var(--text-faint);
+  text-align: center;
+}
+.empty-state > span { font-size: 4rem; filter: drop-shadow(0 6px 24px var(--accent-aura)); }
+.empty-state p {
+  font-family: var(--font-hand);
+  font-size: 1.3rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* ── Modal (glass) ───────────────────────────────────────────────────────── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-overlay);
+  backdrop-filter: blur(var(--blur-strong));
+  -webkit-backdrop-filter: blur(var(--blur-strong));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-box {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-xl);
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90dvh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: var(--shadow-lg), 0 0 0 1px var(--accent-aura);
+  backdrop-filter: blur(var(--blur-glass));
+}
+.modal-box--wide { max-width: 760px; }
+
+.modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-soft);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: all 0.2s var(--ease-smooth);
+}
+.modal-close:hover {
+  background: var(--accent-primary);
+  color: var(--text-invert);
+  transform: rotate(90deg);
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 28px;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.modal-image { width: 100%; border-radius: var(--radius-md); margin-bottom: 16px; }
+.modal-pdf { width: 100%; height: 60dvh; border: none; border-radius: var(--radius-md); margin-bottom: 16px; }
+.modal-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; }
+
+/* ── Form ────────────────────────────────────────────────────────────────── */
+.form-stack { display: flex; flex-direction: column; gap: 14px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.form-input {
+  width: 100%;
+  padding: 13px 18px;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: all 0.25s var(--ease-smooth);
+}
+.form-input::placeholder { color: var(--text-faint); }
+.form-input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 4px var(--accent-aura);
+  background: var(--bg-elevated);
+}
+.form-textarea { min-height: 100px; resize: vertical; }
+
+/* ── Dropzone ────────────────────────────────────────────────────────────── */
+.dropzone {
+  border: 2px dashed var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: 48px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  transition: all 0.3s var(--ease-smooth);
+  background: var(--bg-glass);
+}
+.dropzone:hover,
+.dropzone--active {
+  border-color: var(--accent-primary);
+  background: var(--bg-glass-hv);
+  color: var(--accent-primary);
+  box-shadow: 0 0 0 4px var(--accent-aura);
+}
+.dropzone-file { font-weight: 600; color: var(--accent-primary); }
+.dropzone-hint { font-size: 0.78rem; color: var(--text-faint); }
+
+@media (max-width: 760px) {
+  .page-wrapper { padding-top: 90px; padding-bottom: 80px; }
+  .page-header { padding: 0 20px 36px; margin-bottom: 32px; }
+  .modal-box { padding: 28px 22px; }
+  .form-row { grid-template-columns: 1fr; }
+}

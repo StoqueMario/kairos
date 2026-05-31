@@ -1,0 +1,216 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&family=Caveat:wght@400;600&display=swap');
+
+/* ── Tokens base (paleta) ────────────────────────────────────────────────── */
+:root {
+  /* Verde lésbico + variações */
+  --green-50:  #f0f7ed;
+  --green-100: #d6eace;
+  --green-200: #add897;
+  --green-300: #7fbd65;
+  --green-400: #5fa040;
+  --green-500: #4a8040;   /* primária */
+  --green-600: #3a6632;
+  --green-700: #2d5026;
+  --green-800: #1f3a1b;
+  --green-900: #122310;
+
+  /* Verde vibrante (destaque, especialmente no dark) */
+  --green-glow:  #6fbf5e;
+  --green-neon:  #8eef72;
+  --green-aura:  rgba(111, 191, 94, 0.45);
+
+  /* Âmbar */
+  --amber-300: #f5d07a;
+  --amber-400: #e8a838;
+  --amber-500: #c98a1a;
+
+  /* Tons claros */
+  --cream:     #f7f3ec;
+  --parchment: #ede8df;
+  --paper:     #faf8f4;
+  --ink:       #1a2318;
+  --ink-muted: #4a5548;
+  --ink-faint: #8a9488;
+
+  /* Tons escuros */
+  --abyss:     #0a0f08;       /* mais escuro */
+  --night:     #0f160d;       /* fundo dark */
+  --moss:      #1a2417;       /* superfícies */
+  --moss-soft: #232f1f;       /* hover */
+  --bone:      #f0ede4;       /* texto no dark */
+  --ash:       #b3bcae;       /* texto muted dark */
+  --shade:     #6b7867;
+
+  /* Tipografia */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-hand:    'Caveat', cursive;
+
+  /* Espaços */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+  --radius-pill: 999px;
+
+  /* Easing */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Glass */
+  --blur-glass: 24px;
+  --blur-strong: 40px;
+}
+
+/* ── Tema CLARO (default) ────────────────────────────────────────────────── */
+:root,
+:root[data-theme="light"] {
+  --bg-primary:    var(--cream);
+  --bg-surface:    var(--paper);
+  --bg-elevated:   #ffffff;
+  --bg-glass:      rgba(255, 255, 255, 0.55);
+  --bg-glass-hv:   rgba(255, 255, 255, 0.75);
+  --bg-overlay:    rgba(247, 243, 236, 0.78);
+
+  --text-primary:  var(--ink);
+  --text-muted:    var(--ink-muted);
+  --text-faint:    var(--ink-faint);
+  --text-invert:   var(--bone);
+
+  --border-soft:   rgba(26, 35, 24, 0.08);
+  --border-medium: rgba(26, 35, 24, 0.15);
+  --border-strong: rgba(26, 35, 24, 0.25);
+
+  --accent-primary: var(--green-500);
+  --accent-hover:   var(--green-600);
+  --accent-glow:    var(--green-400);
+  --accent-aura:    rgba(74, 128, 64, 0.25);
+
+  --shadow-sm:  0 1px 3px rgba(26,35,24,.08);
+  --shadow-md:  0 4px 16px rgba(26,35,24,.10);
+  --shadow-lg:  0 12px 40px rgba(26,35,24,.14);
+  --shadow-glow: 0 0 40px rgba(74, 128, 64, 0.20);
+
+  --noise-opacity: 0.04;
+  --grain-blend:   multiply;
+}
+
+/* ── Tema ESCURO ─────────────────────────────────────────────────────────── */
+:root[data-theme="dark"] {
+  --bg-primary:    var(--night);
+  --bg-surface:    var(--moss);
+  --bg-elevated:   var(--moss-soft);
+  --bg-glass:      rgba(35, 47, 31, 0.45);
+  --bg-glass-hv:   rgba(35, 47, 31, 0.65);
+  --bg-overlay:    rgba(15, 22, 13, 0.75);
+
+  --text-primary:  var(--bone);
+  --text-muted:    var(--ash);
+  --text-faint:    var(--shade);
+  --text-invert:   var(--abyss);
+
+  --border-soft:   rgba(240, 237, 228, 0.08);
+  --border-medium: rgba(240, 237, 228, 0.15);
+  --border-strong: rgba(240, 237, 228, 0.25);
+
+  --accent-primary: var(--green-glow);
+  --accent-hover:   var(--green-neon);
+  --accent-glow:    var(--green-neon);
+  --accent-aura:    var(--green-aura);
+
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.45);
+  --shadow-md:  0 6px 22px rgba(0,0,0,.45);
+  --shadow-lg:  0 18px 50px rgba(0,0,0,.55);
+  --shadow-glow: 0 0 60px rgba(111, 191, 94, 0.35);
+
+  --noise-opacity: 0.07;
+  --grain-blend:   screen;
+}
+
+/* Compatibilidade com código antigo ──────────────────────────────────────── */
+:root {
+  --color-primary:    var(--accent-primary);
+  --color-primary-hv: var(--accent-hover);
+  --color-accent:     var(--amber-400);
+  --color-bg:         var(--bg-primary);
+  --color-surface:    var(--bg-surface);
+  --color-border:     var(--border-medium);
+  --color-text:       var(--text-primary);
+  --color-muted:      var(--text-muted);
+  --shadow-card:      var(--shadow-sm);
+}
+
+/* ── Reset ───────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg-primary);
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+  transition: background-color 0.5s var(--ease-smooth), color 0.5s var(--ease-smooth);
+  overflow-x: hidden;
+}
+
+/* Cursor escondido no desktop quando custom cursor ativo */
+@media (hover: hover) and (pointer: fine) {
+  body.has-custom-cursor,
+  body.has-custom-cursor * { cursor: none !important; }
+}
+
+/* ── Tipografia base ─────────────────────────────────────────────────────── */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: 1.05;
+  color: var(--text-primary);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+a { color: inherit; text-decoration: none; }
+
+img { display: block; max-width: 100%; }
+
+button { cursor: pointer; font-family: inherit; background: none; border: none; color: inherit; }
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--accent-primary);
+  border-radius: 4px;
+  opacity: 0.4;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent-hover); }
+
+/* ── Selection ───────────────────────────────────────────────────────────── */
+::selection {
+  background: var(--accent-primary);
+  color: var(--text-invert);
+}
+
+/* ── Utilitários ─────────────────────────────────────────────────────────── */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;
+}
+
+.text-glow {
+  text-shadow: 0 0 30px var(--accent-aura), 0 0 60px var(--accent-aura);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

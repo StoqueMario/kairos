@@ -1,0 +1,187 @@
+html, body, #root, .shell-root, .shell-main {
+  width: 100vw !important;
+  min-width: 100vw !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+}
+/* ── Shell Layout ────────────────────────────────────────────────────────── */
+.shell-root {
+  position: relative;
+  min-height: 100dvh;
+  color: var(--text-primary);
+}
+.shell-root {
+  min-width: 100vw;
+  width: 100vw;
+}
+
+.shell-main {
+  position: relative;
+  z-index: 1;
+}
+.shell-main {
+  min-width: 100vw;
+  width: 100vw;
+}
+
+/* Barra de progresso */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-glow));
+  transform-origin: left center;
+  transform: scaleX(0);
+  z-index: 9999;
+  box-shadow: 0 0 20px var(--accent-aura);
+}
+
+/* Header flutuante (toggle + hambúrguer) */
+.shell-floating {
+  position: fixed;
+  top: 22px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 100;
+}
+
+.theme-toggle {
+  width: 46px;
+  height: 46px;
+  padding: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-icon { display: inline-flex; transition: transform 0.4s var(--ease-spring); }
+.theme-toggle:hover .theme-icon { transform: rotate(45deg); }
+
+.menu-trigger {
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+}
+
+/* ── Drawer ──────────────────────────────────────────────────────────────── */
+.drawer-root {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  background: var(--bg-overlay);
+  backdrop-filter: blur(var(--blur-strong)) saturate(1.6);
+  -webkit-backdrop-filter: blur(var(--blur-strong)) saturate(1.6);
+  padding: 48px 24px;
+  overflow-y: auto;
+}
+
+.drawer-close {
+  position: absolute;
+  top: 22px;
+  right: 24px;
+  width: 46px;
+  height: 46px;
+  padding: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drawer-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin: auto 0;
+  width: 100%;
+  max-width: 800px;
+}
+
+.drawer-link {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6vw, 4.8rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 6px 18px;
+  border-radius: var(--radius-md);
+  transition: color 0.3s var(--ease-smooth), transform 0.4s var(--ease-out);
+  position: relative;
+}
+
+.drawer-emoji {
+  font-size: 0.55em;
+  opacity: 0;
+  transform: translateX(-12px) scale(0.6);
+  transition: opacity 0.3s, transform 0.4s var(--ease-spring);
+}
+
+.drawer-link:hover,
+.drawer-link.is-active {
+  color: var(--accent-primary);
+  transform: translateX(8px);
+}
+
+.drawer-link:hover .drawer-emoji,
+.drawer-link.is-active .drawer-emoji {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+.drawer-foot {
+  font-family: var(--font-hand);
+  color: var(--text-faint);
+  font-size: 1.4rem;
+  margin-top: 12px;
+}
+
+/* ── Custom cursor ───────────────────────────────────────────────────────── */
+.cursor-dot,
+.cursor-halo {
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent-primary);
+  box-shadow: 0 0 12px var(--accent-aura);
+}
+
+.cursor-halo {
+  width: 38px;
+  height: 38px;
+  border: 1.5px solid var(--accent-primary);
+  background: var(--accent-aura);
+  mix-blend-mode: normal;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot, .cursor-halo { display: none; }
+}
+
+/* ── Responsivo ─────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .shell-floating { top: 14px; right: 14px; gap: 6px; }
+  .menu-trigger span { display: none; }
+  .menu-trigger { width: 46px; padding: 0 !important; justify-content: center; }
+}
