@@ -15,10 +15,30 @@ function getDaysTogeather() {
 // URL da foto do casal — configurar via env ou default placeholder
 const COUPLE_PHOTO = import.meta.env.VITE_COUPLE_PHOTO || null
 
-export default function HeroEnvelope() {
+interface Props {
+  onOpened?: () => void
+}
+
+export default function HeroEnvelope({ onOpened }: Props) {
   const [opened, setOpened] = useState(false)
   const [days, setDays] = useState(getDaysTogeather())
   const sectionRef = useRef<HTMLElement>(null)
+
+  // Bloqueia o scroll até a carta ser aberta
+  useEffect(() => {
+    if (!opened) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [opened])
+
+  const handleOpen = () => {
+    if (opened) return
+    setOpened(true)
+    onOpened?.()
+  }
 
   // Atualiza o contador todo dia
   useEffect(() => {
@@ -26,8 +46,9 @@ export default function HeroEnvelope() {
     return () => clearInterval(timer)
   }, [])
 
-  // Parallax: envelope flutua pra cima e esmaece ao rolar
+  // Parallax: envelope flutua pra cima e esmaece ao rolar (só após abrir)
   useEffect(() => {
+    if (!opened) return
     const ctx = gsap.context(() => {
       gsap.to('.envelope-wrapper', {
         y: -70,
@@ -53,7 +74,7 @@ export default function HeroEnvelope() {
       })
     }, sectionRef)
     return () => ctx.revert()
-  }, [])
+  }, [opened])
 
   return (
     <section className="hero-section" ref={sectionRef}>
@@ -89,11 +110,11 @@ export default function HeroEnvelope() {
         >
           <div
             className={`envelope ${opened ? 'envelope--open' : ''}`}
-            onClick={() => !opened && setOpened(true)}
+            onClick={handleOpen}
             role="button"
             tabIndex={0}
             aria-label="Abrir carta"
-            onKeyDown={(e) => e.key === 'Enter' && setOpened(true)}
+            onKeyDown={(e) => e.key === 'Enter' && handleOpen()}
           >
             {/* Corpo do envelope */}
             <div className="envelope-body">

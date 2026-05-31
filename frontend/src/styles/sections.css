@@ -12,6 +12,29 @@
   transform: translateZ(0);
   will-change: transform;
   backface-visibility: hidden;
+  transition: opacity 1.2s ease;
+}
+
+.home-video-bg--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Foto de fundo que aparece ao abrir a carta */
+.home-photo-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -9;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+  pointer-events: none;
+  transform: translateZ(0);
+}
+
+.home-photo-bg--visible {
+  opacity: 0.45;
 }
 
 /*

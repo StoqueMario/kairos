@@ -3,7 +3,11 @@ import HeroEnvelope from '../HeroEnvelope'
 import FloatingFlowers from '../FloatingFlowers'
 import { gsap } from '../../lib/gsap'
 
-export default function HeroSection() {
+interface Props {
+  onEnvelopeOpened?: () => void
+}
+
+export default function HeroSection({ onEnvelopeOpened }: Props) {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -33,7 +37,7 @@ export default function HeroSection() {
   return (
     <section className="section hero-section-v2" ref={ref}>
       <FloatingFlowers count={18} />
-      <HeroEnvelope />
+      <HeroEnvelope onOpened={onEnvelopeOpened} />
       <div className="hero-name-giant" aria-hidden>yasmin</div>
     </section>
   )

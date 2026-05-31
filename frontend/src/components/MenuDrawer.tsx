@@ -67,7 +67,6 @@ export default function MenuDrawer({ open, onClose }: { open: boolean; onClose: 
         ))}
       </nav>
 
-      <p className="drawer-foot">feito com 💚 pra Yasmin</p>
     </div>
   )
 }
