@@ -168,35 +168,108 @@
 }
 
 /* ── Carta (conteúdo dentro do envelope) ─────────────────────────────── */
-.letter-card {
+/* Âncora que centraliza a carta no meio do envelope/seção */
+.letter-card-center {
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  width: 280px;
-  background: var(--paper);
-  border-radius: var(--radius-lg);
-  padding: 20px 20px 24px;
-  box-shadow: var(--shadow-md);
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+}
+
+.letter-card {
+  position: relative;
+  width: clamp(560px, 92vw, 720px);
+  background:
+    radial-gradient(ellipse 140% 120% at 0% 0%, rgba(214, 234, 206, 0.9) 0%, transparent 55%),
+    linear-gradient(135deg, #ffffff 0%, var(--paper) 55%, var(--cream) 100%);
+  border-radius: var(--radius-xl);
+  padding: 26px;
+  box-shadow:
+    var(--shadow-lg),
+    0 40px 80px rgba(20, 40, 16, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 28px;
+  z-index: 10;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-smooth);
+}
+
+/* Lado direito (contador, desde, botão) */
+.letter-card-info {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  z-index: 10;
-  border: 1px solid var(--color-border);
+  justify-content: center;
+  gap: 18px;
+  text-align: center;
+}
+
+/* Aura/glow pulsante atrás do card */
+.letter-card::before {
+  content: '';
+  position: absolute;
+  inset: -28px;
+  z-index: -1;
+  border-radius: var(--radius-xl);
+  background: radial-gradient(ellipse at 50% 40%, var(--green-300) 0%, transparent 70%);
+  opacity: 0.35;
+  filter: blur(34px);
+  animation: card-aura 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes card-aura {
+  0%, 100% { opacity: 0.28; transform: scale(0.96); }
+  50%      { opacity: 0.5;  transform: scale(1.04); }
+}
+
+/* Borda em degradê (moderno) */
+.letter-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-xl);
+  padding: 1px;
+  background: linear-gradient(150deg, rgba(255,255,255,0.95), rgba(127,189,101,0.55), rgba(255,255,255,0.4));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+.letter-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    var(--shadow-lg),
+    0 50px 100px rgba(20, 40, 16, 0.28),
+    var(--shadow-glow);
 }
 
 .letter-photo-frame {
-  width: 100%;
-  aspect-ratio: 4/3;
-  border-radius: var(--radius-md);
+  flex: 0 0 56%;
+  align-self: stretch;
+  min-height: 320px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  border: 3px solid var(--green-200);
+  border: 4px solid #fff;
+  box-shadow: 0 6px 20px rgba(20, 40, 16, 0.18), 0 0 0 1px var(--green-100);
   background: var(--green-50);
 }
 .letter-photo {
   width: 100%; height: 100%;
   object-fit: cover;
+  transition: transform 0.6s var(--ease-smooth);
+}
+.letter-card:hover .letter-photo {
+  transform: scale(1.06);
 }
 .letter-photo-placeholder {
   width: 100%; height: 100%;
@@ -216,40 +289,295 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
 }
 
 .counter-number {
   display: flex;
-  gap: 2px;
+  gap: 4px;
 }
 
 .counter-digit {
   display: inline-block;
   font-family: var(--font-display);
-  font-size: 3rem;
-  font-weight: 700;
-  color: var(--green-600);
+  font-size: 4.6rem;
+  font-weight: 900;
   line-height: 1;
-  min-width: 2rem;
+  min-width: 2.7rem;
   text-align: center;
+  background: linear-gradient(110deg, var(--green-300) 0%, var(--green-500) 35%, var(--green-700) 60%, var(--green-400) 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 12px rgba(74, 128, 64, 0.3));
+  animation: counter-shimmer 6s ease-in-out infinite;
+}
+@keyframes counter-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
 }
 
 .letter-counter-label {
   font-family: var(--font-hand);
-  font-size: 1.1rem;
+  font-size: 1.35rem;
   color: var(--ink-muted);
+  letter-spacing: 0.01em;
 }
 
 .letter-since {
   font-family: var(--font-hand);
-  font-size: .9rem;
+  font-size: 1.05rem;
   color: var(--ink-faint);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  justify-content: center;
+}
+.letter-since::before,
+.letter-since::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  max-width: 38px;
+  background: linear-gradient(90deg, transparent, var(--green-200));
+}
+.letter-since::before { transform: scaleX(-1); }
+
+.letter-read-badge {
+  font-family: var(--font-hand);
+  font-size: 1.4rem;
+  color: #fff;
+  margin-top: 4px;
+  padding: 12px 28px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, var(--green-400) 0%, var(--green-500) 50%, var(--green-600) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 22px rgba(74, 128, 64, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transition: transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-smooth);
+  position: relative;
+  overflow: hidden;
+}
+/* Brilho que pulsa atrás do botão */
+.letter-read-badge::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 0 var(--green-aura);
+  animation: badge-pulse 2.6s infinite ease-out;
+}
+.letter-card:hover .letter-read-badge {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 14px 30px rgba(74, 128, 64, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+@keyframes badge-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(95, 160, 64, 0.5); }
+  70%  { box-shadow: 0 0 0 14px rgba(95, 160, 64, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(95, 160, 64, 0); }
+}
+
+/* ── Modal da Carta Escrita ────────────────────────────────────────────── */
+.letter-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 15, 8, 0.45);
+  backdrop-filter: blur(8px);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.letter-modal-paper {
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -10%, var(--green-50) 0%, transparent 55%),
+    linear-gradient(170deg, var(--paper) 0%, var(--cream) 100%);
+  width: 100%;
+  max-width: 560px;
+  max-height: 88vh;
+  border-radius: calc(var(--radius-lg) + 6px);
+  box-shadow: var(--shadow-lg), 0 24px 70px rgba(20, 40, 16, 0.28), 0 0 100px rgba(74, 128, 64, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 48px 36px 40px;
+  overflow-y: auto;
+}
+
+/* Moldura decorativa interna fininha */
+.letter-modal-paper::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 1px solid var(--green-100);
+  border-radius: var(--radius-lg);
+  pointer-events: none;
+}
+
+/* ── Foto polaroid no topo da carta ──────────────────────────────────── */
+.letter-modal-photo {
+  align-self: center;
+  width: min(280px, 80%);
+  background: #fff;
+  padding: 12px 12px 0;
+  border-radius: 6px;
+  box-shadow: var(--shadow-md), 0 12px 28px rgba(20, 40, 16, 0.18);
+  transform: rotate(-2.5deg);
+  transition: transform 0.4s var(--ease-smooth);
+  margin-bottom: 4px;
+}
+.letter-modal-photo:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+.letter-modal-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 3px;
+}
+.letter-modal-photo-caption {
+  display: block;
+  font-family: var(--font-hand);
+  font-size: 1.15rem;
+  color: var(--ink-muted);
+  text-align: center;
+  padding: 10px 0 12px;
+}
+
+.letter-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--green-50);
+  border: 1px solid var(--green-100);
+  display: grid;
+  place-items: center;
+  color: var(--green-600);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.letter-modal-close:hover {
+  background: var(--green-100);
+  color: var(--green-700);
+  transform: rotate(90deg);
+}
+
+.letter-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: var(--font-hand);
+  color: var(--ink-muted);
+  line-height: 2;
+  font-size: 1.35rem;
+  text-align: left;
+}
+
+.letter-modal-date {
+  font-size: 1rem;
+  color: var(--ink-faint);
+  text-align: right;
+  margin-bottom: 8px;
+}
+
+.letter-modal-greeting {
+  font-family: var(--font-hand);
+  font-size: 1.8rem;
+  color: var(--green-700);
+  font-weight: 600;
+}
+
+.letter-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.letter-modal-body p {
+  text-indent: 20px;
+}
+
+.letter-modal-signature {
+  margin-top: 24px;
+  text-align: right;
+  line-height: 1.5;
+  font-size: 1.4rem;
+}
+
+.signature-name {
+  font-weight: 600;
+  color: var(--green-600);
+}
+
+/* Em telas estreitas o card deitado volta a empilhar (foto em cima) */
+@media (max-width: 640px) {
+  .letter-card {
+    flex-direction: column;
+    align-items: center;
+    width: clamp(300px, 92vw, 380px);
+    gap: 20px;
+    padding: 24px;
+  }
+  .letter-photo-frame {
+    flex: none;
+    width: 100%;
+    align-self: auto;
+    aspect-ratio: 4 / 3;
+    min-height: 0;
+  }
+  .letter-card-info { width: 100%; }
 }
 
 @media (max-width: 480px) {
   .envelope-wrapper { width: 280px; }
   .envelope-body { width: 280px; }
-  .letter-card { width: 240px; }
-  .counter-digit { font-size: 2.4rem; }
+  .letter-card { width: clamp(280px, 92vw, 360px); padding: 20px; }
+  .counter-digit { font-size: 3.4rem; min-width: 2rem; }
+  .letter-counter-label { font-size: 1.2rem; }
+  
+  .letter-modal-paper {
+    padding: 36px 22px 28px;
+  }
+  .letter-modal-content {
+    font-size: 1.2rem;
+    line-height: 1.8;
+  }
+  .letter-modal-photo {
+    width: min(210px, 78%);
+  }
+  .letter-modal-photo-caption {
+    font-size: 1rem;
+  }
+}
+
+.hero-header-parallax-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.envelope-parallax-wrapper {
+  position: relative;
+  width: 320px;
+  height: 220px;
+}
+
+@media (max-width: 480px) {
+  .envelope-parallax-wrapper {
+    width: 280px;
+  }
 }

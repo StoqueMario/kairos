@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react'
-import { gsap, ScrollTrigger } from '../lib/gsap'
+import { useEffect, useRef, useMemo } from 'react'
+import { gsap } from '../lib/gsap'
 
 const FLOWERS = ['🌸', '🌺', '🌷', '🌼', '🌻', '💐', '🪻', '🌹', '🪷']
 
@@ -7,7 +7,6 @@ interface Props {
   count?: number
   scope?: 'section' | 'fixed'
   scrollParallax?: boolean
-  /** elemento que dispara as flores ao entrar/sair do viewport */
   triggerSelector?: string
 }
 
@@ -18,47 +17,58 @@ export default function FloatingFlowers({
 }: Props) {
   const wrap = useRef<HTMLDivElement>(null)
 
+  // Gera dados estáveis de posição e escala no mount para evitar saltos ou novos valores em re-renders
+  const flowersData = useMemo(() => {
+    return Array.from({ length: count }).map((_, i) => ({
+      char: FLOWERS[i % FLOWERS.length],
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      scale: 0.6 + Math.random() * 1.0, // 0.6 a 1.6
+      rotation: -30 + Math.random() * 60, // -30deg a 30deg
+      delay: Math.random() * 1.2,
+      floatDuration: 6 + Math.random() * 6, // 6s a 12s
+      floatX: -20 + Math.random() * 40,
+      floatY: -30 + Math.random() * 60,
+      floatRot: -25 + Math.random() * 50,
+    }))
+  }, [count])
+
   useEffect(() => {
     const el = wrap.current
     if (!el) return
 
-    const items = Array.from(el.querySelectorAll<HTMLSpanElement>('.flower'))
+    const ctx = gsap.context(() => {
+      const items = Array.from(el.querySelectorAll<HTMLSpanElement>('.flower'))
 
-    items.forEach((f) => {
-      const x = gsap.utils.random(0, 100)
-      const y = gsap.utils.random(0, 100)
-      const scale = gsap.utils.random(0.6, 1.6)
-      const rot = gsap.utils.random(-30, 30)
+      items.forEach((f, i) => {
+        const data = flowersData[i]
+        if (!data) return
 
-      gsap.set(f, {
-        left: `${x}%`,
-        top: `${y}%`,
-        scale,
-        rotation: rot,
-        opacity: 0,
-      })
-
-      gsap.to(f, {
-        opacity: gsap.utils.random(0.4, 0.85),
-        duration: 1.4,
-        delay: gsap.utils.random(0, 1.2),
-        ease: 'power2.out',
-      })
-
-      // Flutuação infinita
-      gsap.to(f, {
-        y: `+=${gsap.utils.random(-30, 30)}`,
-        x: `+=${gsap.utils.random(-20, 20)}`,
-        rotation: `+=${gsap.utils.random(-25, 25)}`,
-        duration: gsap.utils.random(6, 12),
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-      })
-
-      if (scrollParallax) {
+        // Aparecimento suave inicial
         gsap.to(f, {
-          yPercent: gsap.utils.random(-80, 80),
+          opacity: 0.4 + Math.random() * 0.45,
+          duration: 1.4,
+          delay: data.delay,
+          ease: 'power2.out',
+        })
+
+        // Flutuação infinita
+        gsap.to(f, {
+          y: `+=${data.floatY}`,
+          x: `+=${data.floatX}`,
+          rotation: `+=${data.floatRot}`,
+          duration: data.floatDuration,
+          ease: 'sine.inOut',
+          yoyo: true,
+          repeat: -1,
+        })
+      })
+
+      // Parallax de scroll aplicado diretamente no container pai,
+      // evitando criar 40+ ScrollTriggers individuais concorrentes.
+      if (scrollParallax && scope !== 'fixed') {
+        gsap.to(el, {
+          yPercent: 20,
           ease: 'none',
           scrollTrigger: {
             trigger: el.parentElement || el,
@@ -68,14 +78,10 @@ export default function FloatingFlowers({
           },
         })
       }
-    })
+    }, wrap)
 
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => {
-        if (t.trigger === (el.parentElement || el)) t.kill()
-      })
-    }
-  }, [scrollParallax])
+    return () => ctx.revert()
+  }, [flowersData, scrollParallax, scope])
 
   return (
     <div
@@ -83,9 +89,18 @@ export default function FloatingFlowers({
       className={`flowers-layer ${scope === 'fixed' ? 'is-fixed' : ''}`}
       aria-hidden
     >
-      {Array.from({ length: count }).map((_, i) => (
-        <span key={i} className="flower">
-          {FLOWERS[i % FLOWERS.length]}
+      {flowersData.map((f, i) => (
+        <span
+          key={i}
+          className="flower"
+          style={{
+            left: f.left,
+            top: f.top,
+            transform: `scale(${f.scale}) rotate(${f.rotation}deg)`,
+            opacity: 0, // Inicia invisível no HTML para prevenir FOUC
+          }}
+        >
+          {f.char}
         </span>
       ))}
     </div>

@@ -95,7 +95,7 @@
 .flower {
   position: absolute;
   font-size: 2.4rem;
-  filter: drop-shadow(0 4px 16px var(--accent-aura));
+  text-shadow: 0 4px 12px var(--accent-aura);
   user-select: none;
   will-change: transform, opacity;
 }

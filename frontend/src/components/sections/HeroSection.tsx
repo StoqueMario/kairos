@@ -14,6 +14,7 @@ export default function HeroSection({ onEnvelopeOpened }: Props) {
     const ctx = gsap.context(() => {
       gsap.from('.hero-name-giant', {
         y: 200,
+        xPercent: -50,
         opacity: 0,
         duration: 1.6,
         ease: 'power4.out',
@@ -21,6 +22,7 @@ export default function HeroSection({ onEnvelopeOpened }: Props) {
       })
       gsap.to('.hero-name-giant', {
         yPercent: -40,
+        xPercent: -50,
         opacity: 0,
         ease: 'none',
         scrollTrigger: {
