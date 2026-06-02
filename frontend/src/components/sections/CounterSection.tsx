@@ -3,7 +3,7 @@ import { gsap } from '../../lib/gsap'
 import { heroMosaic } from '../../data/placeholderPhotos'
 import FloatingFlowers from '../FloatingFlowers'
 
-const START_DATE = new Date('2025-01-29T00:00:00')
+const START_DATE = new Date('2025-11-07T00:00:00')
 
 export default function CounterSection() {
   const ref = useRef<HTMLElement>(null)

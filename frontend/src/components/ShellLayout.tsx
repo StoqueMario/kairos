@@ -3,21 +3,17 @@ import { Outlet } from 'react-router-dom'
 import { Menu } from 'lucide-react'
 import Lenis from 'lenis'
 import { gsap, ScrollTrigger } from '../lib/gsap'
-import { useThemeStore } from '../store/theme'
-import ThemeToggle from './ThemeToggle'
 import MenuDrawer from './MenuDrawer'
 import './ShellLayout.css'
 
 export default function ShellLayout() {
   const [open, setOpen] = useState(false)
   const barRef = useRef<HTMLDivElement>(null)
-  const setTheme = useThemeStore((s) => s.set)
-  const theme = useThemeStore((s) => s.theme)
 
-  // Aplica tema na primeira renderização (caso o persist não tenha rehidratado)
+  // Tema fixo escuro
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme)
-  }, [theme, setTheme])
+    document.documentElement.setAttribute('data-theme', 'dark')
+  }, [])
 
   // Lenis smooth scroll integrado com ScrollTrigger
   useEffect(() => {
@@ -53,7 +49,6 @@ export default function ShellLayout() {
       <div className="scroll-progress" ref={barRef} />
 
       <header className="shell-floating">
-        <ThemeToggle />
         <button
           type="button"
           className="menu-trigger glass-button"

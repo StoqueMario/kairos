@@ -4,25 +4,6 @@ import { X } from 'lucide-react'
 import { gsap } from '../lib/gsap'
 import './HeroEnvelope.css'
 
-// Data de início do namoro
-const START_DATE = new Date('2026-01-29T00:00:00')
-
-function getDaysTogeather() {
-  const now = new Date()
-  const diff = now.getTime() - START_DATE.getTime()
-  return Math.floor(diff / (1000 * 60 * 60 * 24))
-}
-
-// URL da foto do casal — configurar via env ou usar a foto padrão do repo
-const COUPLE_PHOTO = import.meta.env.VITE_COUPLE_PHOTO || '/foto-inicial-carta.jpeg'
-
-// Data formatada por extenso (pt-BR), derivada de START_DATE — fonte única
-const START_DATE_LABEL = START_DATE.toLocaleDateString('pt-BR', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-})
-
 interface Props {
   onOpened?: () => void
 }
@@ -30,7 +11,6 @@ interface Props {
 export default function HeroEnvelope({ onOpened }: Props) {
   const [opened, setOpened] = useState(false)
   const [showLetter, setShowLetter] = useState(false)
-  const [days, setDays] = useState(getDaysTogeather())
   const sectionRef = useRef<HTMLElement>(null)
 
   // Bloqueia o scroll até a carta ser aberta ou enquanto o modal da carta estiver aberto
@@ -44,16 +24,12 @@ export default function HeroEnvelope({ onOpened }: Props) {
   }, [opened, showLetter])
 
   const handleOpen = () => {
-    if (opened) return
-    setOpened(true)
-    onOpened?.()
+    if (!opened) {
+      setOpened(true)
+      onOpened?.()
+    }
+    setShowLetter(true)
   }
-
-  // Atualiza o contador todo dia
-  useEffect(() => {
-    const timer = setInterval(() => setDays(getDaysTogeather()), 60_000)
-    return () => clearInterval(timer)
-  }, [])
 
   // Parallax: envelope flutua pra cima e esmaece ao rolar (só após abrir)
   useEffect(() => {
@@ -158,51 +134,8 @@ export default function HeroEnvelope({ onOpened }: Props) {
             </div>
           </div>
 
-          {/* Carta que sai do envelope — wrapper centraliza no meio do envelope/seção */}
-          <div className="letter-card-center">
-          <AnimatePresence>
-            {opened && (
-              <motion.div
-                className="letter-card"
-                initial={{ y: 24, opacity: 0, scale: 0.95 }}
-                animate={{ y: 0, opacity: 1, scale: 1 }}
-                exit={{ y: 24, opacity: 0, scale: 0.95 }}
-                whileHover={{ scale: 1.03 }}
-                onClick={() => setShowLetter(true)}
-                transition={{ delay: 0.35, duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }}
-              >
-                {/* Foto do casal */}
-                <div className="letter-photo-frame">
-                  {COUPLE_PHOTO ? (
-                    <img src={COUPLE_PHOTO} alt="Nós duas" className="letter-photo" />
-                  ) : (
-                    <div className="letter-photo-placeholder">
-                      <span>📸</span>
-                      <p>nossa foto aqui</p>
-                    </div>
-                  )}
-                </div>
-
-                {/* Lado direito: contador + desde + botão */}
-                <div className="letter-card-info">
-                  {/* Contador */}
-                  <div className="letter-counter">
-                    <CounterNumber value={days} />
-                    <p className="letter-counter-label">dias juntas</p>
-                  </div>
-
-                  <p className="letter-since">desde {START_DATE_LABEL} 💚</p>
-
-                  {/* Dica para abrir a carta escrita */}
-                  <div className="letter-read-badge">
-                    <span>clique para ler a carta ✍️</span>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-          </div>
-        </motion.div>
+          {/* Carta intermedi\u00e1ria removida \u2014 clique no envelope abre direto o modal */}
+          </motion.div>
         </div>
 
         {!opened && (
@@ -290,25 +223,5 @@ export default function HeroEnvelope({ onOpened }: Props) {
         )}
       </AnimatePresence>
     </section>
-  )
-}
-
-// Animação dos dígitos do contador
-function CounterNumber({ value }: { value: number }) {
-  const digits = String(value).split('')
-  return (
-    <div className="counter-number">
-      {digits.map((d, i) => (
-        <motion.span
-          key={`${i}-${d}`}
-          className="counter-digit"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 + i * 0.08, duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
-        >
-          {d}
-        </motion.span>
-      ))}
-    </div>
   )
 }
