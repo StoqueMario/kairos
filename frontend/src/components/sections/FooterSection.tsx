@@ -22,7 +22,7 @@ export default function FooterSection() {
 
   return (
     <section className="section footer-section" ref={ref}>
-      <FloatingFlowers count={20} />
+      <FloatingFlowers count={8} scrollParallax={false} />
       <div className="footer-message text-glow">
         <p className="footer-line-1">feito com</p>
         <p className="footer-heart">💚</p>

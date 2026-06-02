@@ -38,7 +38,7 @@ export default function HeroSection({ onEnvelopeOpened }: Props) {
 
   return (
     <section className="section hero-section-v2" ref={ref}>
-      <FloatingFlowers count={18} />
+      <FloatingFlowers count={8} scrollParallax={false} />
       <HeroEnvelope onOpened={onEnvelopeOpened} />
       <div className="hero-name-giant" aria-hidden>yasmin</div>
     </section>

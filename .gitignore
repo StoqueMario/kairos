@@ -1,0 +1,25 @@
+# env
+.env
+.env.local
+*.env
+
+# binaries / build
+backend/server
+backend/tmp/
+backend/bin/
+
+# SQLite database (dev)
+backend/kairos.db
+backend/kairos.db-*
+backend/*.db
+backend/*.db-journal
+backend/*.db-wal
+backend/*.db-shm
+
+# OS
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/
+.idea/

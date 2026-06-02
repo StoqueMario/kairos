@@ -7,7 +7,7 @@ import (
 
 type Config struct {
 	Port             string
-	DatabaseURL      string
+	DatabasePath     string
 	JWTSecret        string
 	AdminPassword    string
 	CloudinaryURL    string
@@ -21,7 +21,7 @@ type Config struct {
 func Load() *Config {
 	return &Config{
 		Port:             getEnv("PORT", "8080"),
-		DatabaseURL:      getEnv("DATABASE_URL", "host=localhost user=kairos password=kairos dbname=kairos port=5432 sslmode=disable"),
+		DatabasePath:     getEnv("DATABASE_PATH", "kairos.db"),
 		JWTSecret:        getEnv("JWT_SECRET", "kairos-dev-secret-change-in-production"),
 		AdminPassword:    getEnv("ADMIN_PASSWORD", "yasmin2025"),
 		CloudinaryURL:    getEnv("CLOUDINARY_URL", ""),

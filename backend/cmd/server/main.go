@@ -7,10 +7,10 @@ import (
 	"strings"
 
 	"github.com/cloudinary/cloudinary-go/v2"
+	"github.com/glebarez/sqlite"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	echomw "github.com/labstack/echo/v4/middleware"
-	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 
@@ -25,8 +25,8 @@ func main() {
 
 	cfg := config.Load()
 
-	// ── Banco de dados ───────────────────────────────────────────────────────
-	db, err := gorm.Open(postgres.Open(cfg.DatabaseURL), &gorm.Config{
+	// ── Banco de dados (SQLite local, arquivo único) ─────────────────────────────────────────
+	db, err := gorm.Open(sqlite.Open(cfg.DatabasePath), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Warn),
 	})
 	if err != nil {

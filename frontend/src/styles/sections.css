@@ -95,9 +95,16 @@
 .flower {
   position: absolute;
   font-size: 2.4rem;
-  text-shadow: 0 4px 12px var(--accent-aura);
   user-select: none;
   will-change: transform, opacity;
+  /* Composição em GPU; sem filter/text-shadow para não re-rasterizar o glifo colorido a cada frame */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flower { animation: none !important; }
 }
 
 /* ── Hero ───────────────────────────────────────────────────────────────── */

@@ -58,7 +58,7 @@ export default function CounterSection() {
 
   return (
     <section className="section counter-section" ref={ref}>
-      <FloatingFlowers count={8} />
+      <FloatingFlowers count={5} scrollParallax={false} />
 
       <div className="counter-stack">
         <p className="counter-label">já são</p>

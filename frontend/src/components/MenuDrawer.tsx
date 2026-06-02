@@ -3,19 +3,19 @@ import { NavLink } from 'react-router-dom'
 import { X } from 'lucide-react'
 import { gsap } from '../lib/gsap'
 
-interface Item { to: string; emoji: string; label: string }
+interface Item { to: string;  label: string }
 
 const items: Item[] = [
-  { to: '/',             emoji: '❤️',  label: 'Início' },
-  { to: '/cartas',       emoji: '💌', label: 'Cartas' },
-  { to: '/album',        emoji: '📸', label: 'Álbum' },
-  { to: '/timeline',     emoji: '🕰️', label: 'Linha do tempo' },
-  { to: '/lugares',      emoji: '🗺️', label: 'Lugares' },
-  { to: '/restaurantes', emoji: '🍽️', label: 'Restaurantes' },
-  { to: '/filmes',       emoji: '🎬', label: 'Filmes' },
-  { to: '/playlist',     emoji: '🎵', label: 'Playlist' },
-  { to: '/desejos',      emoji: '⭐', label: 'Desejos' },
-  { to: '/metas',        emoji: '🎯', label: 'Metas' },
+  { to: '/',             label: 'Início' },
+  { to: '/cartas',       label: 'Cartas' },
+  { to: '/album',        label: 'Álbum' },
+  { to: '/timeline',     label: 'Linha do tempo' },
+  { to: '/lugares',      label: 'Lugares' },
+  { to: '/restaurantes', label: 'Restaurantes' },
+  { to: '/filmes',       label: 'Filmes' },
+  { to: '/playlist',     label: 'Playlist' },
+  { to: '/desejos',      label: 'Desejos' },
+  { to: '/metas',        label: 'Metas' },
 ]
 
 export default function MenuDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
