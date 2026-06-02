@@ -61,7 +61,6 @@ export default function MenuDrawer({ open, onClose }: { open: boolean; onClose: 
             onClick={onClose}
             className={({ isActive }) => `drawer-link ${isActive ? 'is-active' : ''}`}
           >
-            <span className="drawer-emoji">{it.emoji}</span>
             <span className="drawer-label">{it.label}</span>
           </NavLink>
         ))}

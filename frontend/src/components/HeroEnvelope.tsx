@@ -246,7 +246,7 @@ export default function HeroEnvelope({ onOpened }: Props) {
               <div className="letter-modal-content">
                 {/* Foto do casal no topo da carta (polaroid) */}
                 <div className="letter-modal-photo">
-                  <img src={COUPLE_PHOTO} alt="Nós" />
+                  <img src="/img1.jpg" alt="Nós" />
                   <span className="letter-modal-photo-caption">eu & você 💚</span>
                 </div>
 
